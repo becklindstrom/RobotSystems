@@ -6,10 +6,10 @@ from .filedb import fileDB
 import os
 
 # user and User home directory
-User = os.popen('echo ${SUDO_USER:-$LOGNAME}').readline().strip()
-UserHome = os.popen('getent passwd %s | cut -d: -f 6' %
-                    User).readline().strip()
-config_file = '%s/.config/robot-hat/robot-hat.conf' % UserHome
+# User = os.popen('echo ${SUDO_USER:-$LOGNAME}').readline().strip()
+# UserHome = os.popen('getent passwd %s | cut -d: -f 6' %
+#                     User).readline().strip()
+# config_file = '%s/.config/robot-hat/robot-hat.conf' % UserHome
 
 
 class Motor():
@@ -70,7 +70,7 @@ class Motors(_Basic_class):
     MOTOR_2_PWM_PIN = "P12"
     MOTOR_2_DIR_PIN = "D5"
 
-    def __init__(self, db=config_file, *args, **kwargs):
+    def __init__(self, db=None, *args, **kwargs):
         """
         Initialize motors with robot_hat.motor.Motor
 
@@ -79,7 +79,7 @@ class Motors(_Basic_class):
         """
         super().__init__(*args, **kwargs)
 
-        self.db = fileDB(db=db, mode='774', owner=User)
+        self.db = fileDB(mode='774')
         self.left_id = int(self.db.get("left", default_value=0))
         self.right_id = int(self.db.get("right", default_value=0))
         left_reversed = bool(self.db.get(

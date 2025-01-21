@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from .basic import _Basic_class
 from .utils import run_command
-from smbus2 import SMBus
+# from smbus2 import SMBus
 import multiprocessing
 
 
@@ -39,17 +39,17 @@ class I2C(_Basic_class):
         """
         super().__init__(*args, **kwargs)
         self._bus = bus
-        self._smbus = SMBus(self._bus)
-        if isinstance(address, list):
-            connected_devices = self.scan()
-            for _addr in address:
-                if _addr in connected_devices:
-                    self.address = _addr
-                    break
-            else:
-                self.address = address[0]
-        else:
-            self.address = address
+        # self._smbus = SMBus(self._bus)
+        # if isinstance(address, list):
+        #     # connected_devices = self.scan()
+        #     # for _addr in address:
+        #     #     if _addr in connected_devices:
+        #     #         self.address = _addr
+        #     #         break
+        #     # else:
+        #     #     self.address = address[0]
+        # else:
+        #     self.address = address
 
         # print(f'address: 0x{self.address:02X}')
 
@@ -69,8 +69,9 @@ class I2C(_Basic_class):
     @_retry_wrapper
     def _write_word_data(self, reg, data):
         # with I2C.i2c_lock.get_lock():
-        self._debug(f"_write_word_data: [0x{reg:02X}] [0x{data:04X}]")
-        return self._smbus.write_word_data(self.address, reg, data)
+        # self._debug(f"_write_word_data: [0x{reg:02X}] [0x{data:04X}]")
+        # return self._smbus.write_word_data(self.address, reg, data)
+        return None
 
     @_retry_wrapper
     def _write_i2c_block_data(self, reg, data):
